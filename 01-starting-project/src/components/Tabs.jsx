@@ -1,9 +1,9 @@
-import TabButton from "./TabButton/TabButton";
+export default function Tabs({children, buttons, ButtonsContainer}) {
+    // const ButtonsContainer = buttonsContainer;
 
-export default function Tabs({children, buttons}) {
     return (
         <>
-            <menu>{buttons}</menu>
+            <ButtonsContainer>{buttons}</ButtonsContainer>
             {children}
         </>
     )
