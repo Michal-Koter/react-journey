@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, Fragment} from "react";
 
 import {CORE_CONCEPTS, EXAMPLES} from "./data";
 import CoreConcept from "./components/CoreConcepts/CoreConcept";
@@ -12,8 +12,9 @@ function App() {
         setSelectedTopic(selectedButton);
     }
 
+    // <>...</> === <Fragment>...</Fragment>
     return (
-        <div>
+        <>
             <Header/>
             <main>
                 <section id="core-concepts">
@@ -64,7 +65,7 @@ function App() {
                     )}
                 </section>
             </main>
-        </div>
+        </>
     );
 }
 
