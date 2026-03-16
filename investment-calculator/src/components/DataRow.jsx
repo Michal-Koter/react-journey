@@ -1,13 +1,11 @@
-export default function DataRow({TagName, data}) {
+export default function DataRow({data}) {
     return (
-        <TagName>
-            <tr>
-                <th>{data.year}</th>
-                <th>{data.investmentValue}</th>
-                <th>{data.yearlyInterest}</th>
-                <th>{data.totalInterest}</th>
-                <th>{data.capital}</th>
-            </tr>
-        </TagName>
+        <tr>
+            <th>{data.year}</th>
+            <th>{data.valueEndOfYear}</th>
+            <th>{data.interest}</th>
+            <th>{data.total}</th>
+            <th>{data.annualInvestment}</th>
+        </tr>
     )
 }
