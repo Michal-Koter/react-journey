@@ -1,8 +1,8 @@
-export default function UserInput({label, code, onBlur}) {
+export default function UserInput({label, code, onChange}) {
     return (
-        <div>
+        <p>
             <label>{label}</label>
-            <input type="number" defaultValue="0" onBlur={(event) => onBlur(event, code)} required/>
-        </div>
+            <input type="number" defaultValue="0" onChange={(event) => onChange(event, code)} required/>
+        </p>
     )
 }

@@ -1,16 +1,16 @@
 import UserInput from './UserInput';
 
-export default function CalculatorForm({onBlur}) {
+export default function CalculatorForm({onChange}) {
     return (
-        <form id="user-input">
+        <section id="user-input">
             <div className="input-group">
-                <UserInput label="Initial Investment" code="initialInvestment" onBlur={onBlur}/>
-                <UserInput label="Annual Investment" code="annualInvestment" onBlur={onBlur}/>
+                <UserInput label="Initial Investment" code="initialInvestment" onChange={onChange}/>
+                <UserInput label="Annual Investment" code="annualInvestment" onChange={onChange}/>
             </div>
             <div className="input-group">
-                <UserInput label="Expected Return" code="expectedReturn" onBlur={onBlur}/>
-                <UserInput label="Duration" code="duration" onBlur={onBlur}/>
+                <UserInput label="Expected Return" code="expectedReturn" onChange={onChange}/>
+                <UserInput label="Duration" code="duration" onChange={onChange}/>
             </div>
-        </form>
+        </section>
     )
 }

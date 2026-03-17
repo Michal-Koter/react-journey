@@ -2,7 +2,6 @@ import Header from "./components/Header.jsx";
 import CalculatorForm from "./components/CalculatorForm.jsx";
 import Result from "./components/Result.jsx";
 import {useState} from "react";
-import {calculateInvestmentResults} from "./util/investment.js";
 
 const INITIAL_STATE = {
     initialInvestment: 0,
@@ -14,7 +13,6 @@ const INITIAL_STATE = {
 export default function App() {
     const [formData, setFormData] = useState(INITIAL_STATE);
 
-
     function handleChange(event, field) {
         setFormData(prev => ({...prev, [field]: +event.target.value}));
     }
@@ -22,7 +20,7 @@ export default function App() {
     return (
         <>
             <Header/>
-            <CalculatorForm onBlur={handleChange}/>
+            <CalculatorForm onChange={handleChange}/>
             <Result data={formData}/>
         </>
     )
