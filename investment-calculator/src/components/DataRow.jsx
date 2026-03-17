@@ -5,7 +5,7 @@ export default function DataRow({data}) {
             <th>{data.valueEndOfYear}</th>
             <th>{data.interest}</th>
             <th>{data.total}</th>
-            <th>{data.annualInvestment}</th>
+            <th>{data.investment}</th>
         </tr>
     )
 }

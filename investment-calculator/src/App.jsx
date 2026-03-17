@@ -19,13 +19,11 @@ export default function App() {
         setFormData(prev => ({...prev, [field]: +event.target.value}));
     }
 
-    const investmentForecasts = (formData.duration > 0) ? calculateInvestmentResults(formData) : null;
-
     return (
         <>
             <Header/>
             <CalculatorForm onBlur={handleChange}/>
-            <Result data={investmentForecasts}/>
+            <Result data={formData}/>
         </>
     )
 }
