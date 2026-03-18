@@ -23,7 +23,7 @@ export default function AuthInputs() {
   return (
     <div id="auth-inputs">
       <div className="controls">
-        <p>
+        <p className="paragraph"> {/* class used outside the scope and not styled */}
           <label className={`label ${emailNotValid ? "invalid" : ""}`}>Email</label>
           <input
             type="email"
