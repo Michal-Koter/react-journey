@@ -1,10 +1,11 @@
 import Sidebar from "./components/Sidebar.jsx";
+import NewProject from "./components/NewProject.jsx";
 
 function App() {
   return (
-    <main className="h-sreen my-8">
+    <main className="h-sreen my-8 flex gap-8">
         <Sidebar/>
-        <h1 className="col-span-4 my-8 text-center text-5xl font-bold">Hello World</h1>
+        <NewProject/>
     </main>
   );
 }
