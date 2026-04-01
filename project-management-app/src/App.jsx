@@ -29,13 +29,20 @@ function App() {
         }));
     }
 
+    function handleCancelAddProject() {
+        setProjectsState(prev => ({
+            ...prev,
+            selectedProjectId: undefined
+        }));
+    }
+
     return (
         <main className="h-sreen my-8 flex gap-8">
             <Sidebar handleStartAddProject={handleStartAddProject} projects={projectsState.projects}/>
             {projectsState.selectedProjectId === undefined
                 ? <NoProjectSelected handleStartAddProject={handleStartAddProject}/>
                 : projectsState.selectedProjectId === null
-                    ? <NewProject onAdd={handleAddProject}/>
+                    ? <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject}/>
                     : null //TODO: add in the future project component
             }
         </main>
