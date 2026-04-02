@@ -51,6 +51,17 @@ function App() {
         )[0];
     }
 
+    function handleDeleteProject() {
+        const projects = projectsState.projects.filter(
+            project => (project.id !== projectsState.selectedProjectId)
+        );
+        setProjectsState(prev => ({
+            ...prev,
+            selectedProjectId: undefined,
+            projects: projects
+        }))
+    }
+
     return (
         <main className="h-sreen my-8 flex gap-8">
             <Sidebar
@@ -62,7 +73,7 @@ function App() {
                 ? <NoProjectSelected handleStartAddProject={handleStartAddProject}/>
                 : projectsState.selectedProjectId === null
                     ? <NewProject onAdd={handleAddProject} onCancel={handleCancelAddProject}/>
-                    : <SelectedProject project={selectedProject}/>
+                    : <SelectedProject project={selectedProject} onDelete={handleDeleteProject}/>
             }
         </main>
     );
