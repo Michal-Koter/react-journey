@@ -1,6 +1,7 @@
 import {useCallback, useState} from "react";
 import Question from "./Question.jsx";
 import QUESTIONS from "../questions.js";
+import Summery from "./Summery.jsx";
 
 export default function Quiz() {
     const [userAnswers, setUserAnswers] = useState([]);
@@ -23,10 +24,7 @@ export default function Quiz() {
                     onSelectAnswer={handleUserAnswers}
                     onSkipAnswer={handleTimeoutExpired}
                 />
-                : <div id="summary">
-                    <img src={quizCompleteImg} alt="Trophy icon"/>
-                    <h2>Quiz Completed!</h2>
-                </div>
+                : <Summery userAnswers={userAnswers} />
             }
         </div>
     )
