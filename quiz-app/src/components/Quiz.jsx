@@ -1,58 +1,33 @@
 import {useCallback, useState} from "react";
+import Question from "./Question.jsx";
 import QUESTIONS from "../questions.js";
-import quizCompleteImg from "../assets/quiz-complete.png";
-import QuestionTimer from "./QuestionTimer.jsx";
-
-const QUESTIONS_NUMBER = QUESTIONS.length;
 
 export default function Quiz() {
     const [userAnswers, setUserAnswers] = useState([]);
     const activeQuestionIdx = userAnswers.length;
+    const quizIsComplete = activeQuestionIdx === QUESTIONS.length;
 
-    const handleUserAnswers = useCallback((userAnswers) => {
-        setUserAnswers(prev => [...prev, userAnswers]);
+    const handleUserAnswers = useCallback((userAnswer) => {
+        setUserAnswers(prev => [...prev, userAnswer]);
     }, []);
 
     const handleTimeoutExpired = useCallback(() => handleUserAnswers(null), [handleUserAnswers]);
 
-    let content;
-    if (QUESTIONS_NUMBER > activeQuestionIdx) {
-        const activeQuestion = QUESTIONS[activeQuestionIdx]
-            , correctAnswer = activeQuestion.answers[0]
-            , shuffledAnswers = [...activeQuestion.answers].sort((a, b) => Math.random() - 0.5);
-
-        content = (
-            <div id="question">
-                <h2>{activeQuestion.text}</h2>
-                <QuestionTimer
-                    key={activeQuestionIdx}
-                    timeout={10000}
-                    onTimeout={handleTimeoutExpired}
-                />
-                <ul id="answers">
-                    {shuffledAnswers.map((answer, idx) => (
-                        <li key={idx} className="answer">
-                            <button onClick={() => handleUserAnswers(answer)}>{answer}</button>
-                        </li>
-                    ))}
-                </ul>
-                <p id="question-overview">{`${activeQuestionIdx + 1}/${QUESTIONS_NUMBER}`}</p>
-                <progress className="answered" value={activeQuestionIdx} max={QUESTIONS_NUMBER}></progress>
-            </div>
-        )
-    } else {
-        content = (
-            <div id="summary">
-                <img src={quizCompleteImg} alt="Trophy icon"/>
-                <h2>Quiz Completed</h2>
-            </div>
-        )
-    }
-
     return (
         <div id="quiz">
-            {content}
+            {!quizIsComplete
+                ? <Question
+                    key={activeQuestionIdx}
+                    idx={activeQuestionIdx}
+                    selectedAnswer={userAnswers[userAnswers.length - 1]}
+                    onSelectAnswer={handleUserAnswers}
+                    onSkipAnswer={handleTimeoutExpired}
+                />
+                : <div id="summary">
+                    <img src={quizCompleteImg} alt="Trophy icon"/>
+                    <h2>Quiz Completed!</h2>
+                </div>
+            }
         </div>
-
     )
 }
