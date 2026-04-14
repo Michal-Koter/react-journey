@@ -15,7 +15,7 @@ export default function Answer({answers, selectedAnswer, answerState, onSelect})
                 let cssClasses = "";
 
                 if (isSelected) {
-                    if (answerState === "answer") {
+                    if (answerState === "answered") {
                         cssClasses = "selected";
                     } else if ((answerState === "correct" || answerState === "wrong")) {
                         cssClasses = answerState;
