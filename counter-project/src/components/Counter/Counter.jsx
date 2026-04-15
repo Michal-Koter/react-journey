@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 
 import IconButton from '../UI/IconButton.jsx';
 import MinusIcon from '../UI/Icons/MinusIcon.jsx';
@@ -27,7 +27,10 @@ function isPrime(number) {
   return true;
 }
 
-export default function Counter({ initialCount }) {
+// memo compare old and new props and prevent re-execution if they are the same.
+// In this case, if the initialCount prop is the same, the Counter component will not re-render, even if the parent component (App) re-renders.
+// This optimization can help improve performance by avoiding unnecessary renders of the Counter component when its props haven't changed.
+const Counter = memo(function Counter({ initialCount }) {
   log('<Counter /> rendered', 1);
   const initialCountIsPrime = isPrime(initialCount);
 
@@ -58,4 +61,6 @@ export default function Counter({ initialCount }) {
       </p>
     </section>
   );
-}
+})
+
+export default Counter;
