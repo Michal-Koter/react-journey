@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import {useState, memo, useCallback, useMemo} from 'react';
 
 import IconButton from '../UI/IconButton.jsx';
 import MinusIcon from '../UI/Icons/MinusIcon.jsx';
@@ -32,17 +32,22 @@ function isPrime(number) {
 // This optimization can help improve performance by avoiding unnecessary renders of the Counter component when its props haven't changed.
 const Counter = memo(function Counter({ initialCount }) {
   log('<Counter /> rendered', 1);
-  const initialCountIsPrime = isPrime(initialCount);
+
+  // useMemo allows to memoize the result of a function, so it will only be re-evaluated when its dependencies change.
+  // In this case, the isPrime function will only be called again if the initialCount prop changes.
+  // This can help improve performance by avoiding unnecessary calculations when the initialCount prop remains the same across renders.
+  const initialCountIsPrime = useMemo(() => isPrime(initialCount), [initialCount]);
 
   const [counter, setCounter] = useState(initialCount);
 
-  function handleDecrement() {
+  // useCallback allow optimize component rendering
+  const handleDecrement = useCallback(() => {
     setCounter((prevCounter) => prevCounter - 1);
-  }
+  }, []);
 
-  function handleIncrement() {
+  const handleIncrement = useCallback(() => {
     setCounter((prevCounter) => prevCounter + 1);
-  }
+  }, []);
 
   return (
     <section className="counter">
