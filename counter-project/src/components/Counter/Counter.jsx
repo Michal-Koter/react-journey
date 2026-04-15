@@ -5,6 +5,7 @@ import MinusIcon from '../UI/Icons/MinusIcon.jsx';
 import PlusIcon from '../UI/Icons/PlusIcon.jsx';
 import CounterOutput from './CounterOutput.jsx';
 import { log } from '../../log.js';
+import CounterHistory from "./CounterHistory.jsx";
 
 function isPrime(number) {
   log(
@@ -27,6 +28,10 @@ function isPrime(number) {
   return true;
 }
 
+function generateId() {
+  return Math.random() * 1000;
+}
+
 // memo compare old and new props and prevent re-execution if they are the same.
 // In this case, if the initialCount prop is the same, the Counter component will not re-render, even if the parent component (App) re-renders.
 // This optimization can help improve performance by avoiding unnecessary renders of the Counter component when its props haven't changed.
@@ -38,15 +43,23 @@ const Counter = memo(function Counter({ initialCount }) {
   // This can help improve performance by avoiding unnecessary calculations when the initialCount prop remains the same across renders.
   const initialCountIsPrime = useMemo(() => isPrime(initialCount), [initialCount]);
 
-  const [counter, setCounter] = useState(initialCount);
+  // const [counter, setCounter] = useState(initialCount);
+  const [counterChange, setCounterChange] = useState([{value: initialCount, id: generateId()}]);
+
+  const currentCounter = counterChange.reduce(
+      (prevCounter, counterChange) => prevCounter + counterChange.value
+      , 0
+  );
 
   // useCallback allow optimize component rendering
   const handleDecrement = useCallback(() => {
-    setCounter((prevCounter) => prevCounter - 1);
+    // setCounter((prevCounter) => prevCounter - 1);
+    setCounterChange(prev => [{value: -1, id: generateId()}, ...prev]);
   }, []);
 
   const handleIncrement = useCallback(() => {
-    setCounter((prevCounter) => prevCounter + 1);
+    // setCounter((prevCounter) => prevCounter + 1);
+    setCounterChange(prev => [{value: 1, id: generateId()}, ...prev]);
   }, []);
 
   return (
@@ -59,11 +72,12 @@ const Counter = memo(function Counter({ initialCount }) {
         <IconButton icon={MinusIcon} onClick={handleDecrement}>
           Decrement
         </IconButton>
-        <CounterOutput value={counter} />
+        <CounterOutput value={currentCounter} />
         <IconButton icon={PlusIcon} onClick={handleIncrement}>
           Increment
         </IconButton>
       </p>
+      <CounterHistory history={counterChange} />
     </section>
   );
 })
