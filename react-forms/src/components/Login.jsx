@@ -1,21 +1,16 @@
-import {useState} from "react";
+import {useRef} from "react";
+
 
 export default function Login() {
-    const [credentials, setCredentials] = useState({
-        email: '',
-        password: '',
-    })
+    const email = useRef();
+    const password = useRef();
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(credentials)
-    }
 
-    function handleValueChange(identifier, value) {
-        setCredentials(prev => ({
-            ...prev,
-            [identifier]: value
-        }));
+        const emailValue = email.current.value;
+        const passwordValue = password.current.value;
+        console.log(emailValue, passwordValue);
     }
 
   return (
@@ -28,8 +23,8 @@ export default function Login() {
           <input id="email"
                  type="email"
                  name="email"
-                 onChange={(event) => handleValueChange('email', event.target.event)}
-                 value={credentials.email}/>
+                 ref={email}
+          />
         </div>
 
         <div className="control no-margin">
@@ -37,8 +32,8 @@ export default function Login() {
           <input id="password"
                  type="password"
                  name="password"
-                 onChange={(event) => handleValueChange('password', event.target.event)}
-                 value={credentials.password}/>
+                 ref={password}
+          />
         </div>
       </div>
 
