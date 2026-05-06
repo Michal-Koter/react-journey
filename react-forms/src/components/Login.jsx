@@ -2,6 +2,8 @@ import {useRef} from "react";
 
 
 export default function Login() {
+    const[formIsInvalid, setFormIsInvalid] = useRef(false);
+
     const email = useRef();
     const password = useRef();
 
@@ -10,7 +12,15 @@ export default function Login() {
 
         const emailValue = email.current.value;
         const passwordValue = password.current.value;
-        console.log(emailValue, passwordValue);
+
+        const emailIsInvalid = !emailValue.includes('@');
+        if (emailIsInvalid) {
+            setFormIsInvalid(emailIsInvalid);
+            return;
+        }
+
+        setFormIsInvalid(false);
+        console.log("Processing...")
     }
 
   return (
@@ -25,6 +35,7 @@ export default function Login() {
                  name="email"
                  ref={email}
           />
+            <div className='control-error'>{formIsInvalid && <p>Please enter a valid email address.</p>}</div>
         </div>
 
         <div className="control no-margin">
