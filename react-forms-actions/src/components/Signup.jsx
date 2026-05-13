@@ -2,61 +2,62 @@ import {useActionState} from "react"
 
 import {isEmail, isNotEmpty, isEqualToOtherValue, hasMinLength} from "../util/validation.js";
 
-export default function Signup() {
-    function signupAction(prevFormState, formData) {
-        const email = formData.get('email');
-        const password = formData.get('password');
-        const confirmPassword = formData.get('confirm-password');
-        const firstName = formData.get('first-name');
-        const lastName = formData.get('last-name');
-        const role = formData.get('role');
-        const terms = formData.get('terms');
-        const acquisition = formData.getAll('acquisition');
+function signupAction(prevFormState, formData) {
+    const email = formData.get('email');
+    const password = formData.get('password');
+    const confirmPassword = formData.get('confirm-password');
+    const firstName = formData.get('first-name');
+    const lastName = formData.get('last-name');
+    const role = formData.get('role');
+    const terms = formData.get('terms');
+    const acquisition = formData.getAll('acquisition');
 
-        let errors = [];
-        if (!isEmail(email)) {
-            errors.push("Invalid email address.");
-        }
-        if (!isNotEmpty(password) || !hasMinLength(password, 8)) {
-            errors.push("Password must be at least 8 characters long.");
-        }
-        if (!isEqualToOtherValue(password, confirmPassword)) {
-            errors.push("Passwords do not match.");
-        }
-        if (!isNotEmpty(firstName)) {
-            errors.push("First name is required.");
-        }
-        if (!isNotEmpty(lastName)) {
-            errors.push("Last name is required.");
-        }
-        if (!isNotEmpty(role)) {
-            errors.push("Role is required.");
-        }
-        if (!terms) {
-            errors.push("You must agree to the terms.");
-        }
-        if (acquisition.length === 0) {
-            errors.push("Please select at least one acquisition channel.");
-        }
-
-        if (errors.length > 0) {
-            return {
-                errors,
-                enteredValues: {
-                    email,
-                    password,
-                    confirmPassword,
-                    firstName,
-                    lastName,
-                    role,
-                    acquisition,
-                    terms,
-                }
-            };
-        }
-
-        return {errors: null}
+    let errors = [];
+    if (!isEmail(email)) {
+        errors.push("Invalid email address.");
     }
+    if (!isNotEmpty(password) || !hasMinLength(password, 8)) {
+        errors.push("Password must be at least 8 characters long.");
+    }
+    if (!isEqualToOtherValue(password, confirmPassword)) {
+        errors.push("Passwords do not match.");
+    }
+    if (!isNotEmpty(firstName)) {
+        errors.push("First name is required.");
+    }
+    if (!isNotEmpty(lastName)) {
+        errors.push("Last name is required.");
+    }
+    if (!isNotEmpty(role)) {
+        errors.push("Role is required.");
+    }
+    if (!terms) {
+        errors.push("You must agree to the terms.");
+    }
+    if (acquisition.length === 0) {
+        errors.push("Please select at least one acquisition channel.");
+    }
+
+    if (errors.length > 0) {
+        return {
+            errors,
+            enteredValues: {
+                email,
+                password,
+                confirmPassword,
+                firstName,
+                lastName,
+                role,
+                acquisition,
+                terms,
+            }
+        };
+    }
+
+    return {errors: null}
+}
+
+export default function Signup() {
 
     const [formState, formAction, pending] = useActionState(signupAction, {errors: null});
 
