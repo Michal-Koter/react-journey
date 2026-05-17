@@ -1,12 +1,13 @@
-export default function Meal() {
+export default function Meal({id, name, price, description, image}) {
+    //TODO: handle add to cart with context
     return (
         <div className="meal-item">
             <article>
-                <img src="" alt=""/>
-                <h3>Meal name</h3>
+                <img src={`http://localhost:3000/${image}`} alt=""/>
+                <h3>{name}</h3>
                 <section className="meal-item-actions">
-                    <p className="meal-item-price">$21.37</p>
-                    <p className="meal-item-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                    <p className="meal-item-price">${price}</p>
+                    <p className="meal-item-description">{description}</p>
                     <button className="button">Add to Cart</button>
                 </section>
             </article>
