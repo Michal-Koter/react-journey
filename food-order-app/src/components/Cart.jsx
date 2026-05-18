@@ -3,10 +3,8 @@ import Modal from "./Modal.jsx";
 import {useContext} from "react";
 import {CartContext} from "../store/cart-context.jsx";
 
-export default function Cart({open, onClose, onGoToCheckout}) {
+export default function Cart({open, onClose, onGoToCheckout, amount}) {
     const {items} = useContext(CartContext);
-
-    const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
     return (
         <Modal open={open} onClose={onClose}>
@@ -17,7 +15,7 @@ export default function Cart({open, onClose, onGoToCheckout}) {
                         <CartItem key={item.id} {...item}/>
                     ))}
                 </ul>
-                <section className="cart-total">{totalAmount}</section>
+                <section className="cart-total">${amount}</section>
                 <section className="modal-actions">
                     <button className="text-button" onClick={onClose}>Close</button>
                     <button className="button" onClick={onGoToCheckout}>Go to Checkout</button>

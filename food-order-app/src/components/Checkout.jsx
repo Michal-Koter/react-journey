@@ -1,12 +1,12 @@
 import Modal from "./Modal.jsx";
 import Input from "./Input.jsx";
 
-export default function Checkout({open, onClose}) {
+export default function Checkout({open, onClose, amount}) {
     return (
         <Modal open={open} onClose={onClose}>
             <form action={null}>
                 <h2>Checkout</h2>
-                <p>Total amount: $21.37</p>
+                <p>Total amount: ${amount}</p>
                 <Input type="text" id="name" label="Full name"/>
                 <Input type="email" id="email" label="Email"/>
                 <Input type="text" id="street" label="Street"/>

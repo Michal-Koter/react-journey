@@ -9,8 +9,9 @@ export default function Header() {
     const [isCheckoutOpen, setCheckoutOpen] = useState(false);
     const {items} = useContext(CartContext);
     const itemsCount = items.reduce((total, item) => total + item.quantity, 0);
+    const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
-    function handleCartButtonClick(dialog) {
+    function handleCartButtonClick() {
         setCatOpen(true);
     }
 
@@ -34,8 +35,8 @@ export default function Header() {
                 <h1>Reactfood</h1>
             </div>
             <button className="text-button" onClick={handleCartButtonClick}>Cart ({itemsCount})</button>
-            <Cart open={isCartOpen} onClose={handleCartClose} onGoToCheckout={handleGoToCheckout}/>
-            <Checkout open={isCheckoutOpen} onClose={handleCheckoutClose}/>
+            <Cart open={isCartOpen} onClose={handleCartClose} onGoToCheckout={handleGoToCheckout} amount={totalAmount}/>
+            <Checkout open={isCheckoutOpen} onClose={handleCheckoutClose} amount={totalAmount}/>
         </header>
     );
 }
