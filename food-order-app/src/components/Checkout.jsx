@@ -1,9 +1,9 @@
 import Modal from "./Modal.jsx";
 import Input from "./Input.jsx";
 
-export default function Checkout() {
+export default function Checkout({open, onClose}) {
     return (
-        <Modal open={false} onClose={() => {}}>
+        <Modal open={open} onClose={onClose}>
             <form action={null}>
                 <h2>Checkout</h2>
                 <p>Total amount: $21.37</p>
@@ -15,8 +15,8 @@ export default function Checkout() {
                     <Input type="text" id="city" label="City"/>
                 </div>
                 <p className="modal-actions">
-                    <button className="button text-button">Close</button>
-                    <button className="button">Submit Order</button>
+                    <button type="button" className="button text-button" onClick={onClose}>Close</button>
+                    <button type="submit" className="button">Submit Order</button>
                 </p>
             </form>
         </Modal>

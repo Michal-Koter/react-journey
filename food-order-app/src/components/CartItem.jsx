@@ -1,10 +1,10 @@
-export default function CartItem() {
+export default function CartItem({id, name, quantity}) {
     return (
         <li className="cart-item">
-            <p>Item name</p>
+            <p>{name}</p>
             <section className="cart-item-actions">
                 <button>-</button>
-                <p>1</p>
+                <p>{quantity}</p>
                 <button>+</button>
             </section>
         </li>
