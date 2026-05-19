@@ -6,7 +6,7 @@ export default function Checkout({open, onClose, amount}) {
         <Modal open={open} onClose={onClose}>
             <form action={null}>
                 <h2>Checkout</h2>
-                <p>Total amount: ${amount}</p>
+                <p>Total amount: {amount}</p>
                 <Input type="text" id="name" label="Full name"/>
                 <Input type="email" id="email" label="Email"/>
                 <Input type="text" id="street" label="Street"/>

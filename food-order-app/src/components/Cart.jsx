@@ -15,7 +15,7 @@ export default function Cart({open, onClose, onGoToCheckout, amount}) {
                         <CartItem key={item.id} {...item}/>
                     ))}
                 </ul>
-                <section className="cart-total">${amount}</section>
+                <section className="cart-total">{amount}</section>
                 <section className="modal-actions">
                     <button className="text-button" onClick={onClose}>Close</button>
                     <button className="button" onClick={onGoToCheckout}>Go to Checkout</button>

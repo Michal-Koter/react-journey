@@ -9,7 +9,8 @@ export default function Header() {
     const [isCheckoutOpen, setCheckoutOpen] = useState(false);
     const {items} = useContext(CartContext);
     const itemsCount = items.reduce((total, item) => total + item.quantity, 0);
-    const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0);
+    const totalAmount = items.reduce((total, item) => total + item.price * item.quantity, 0)
+        .toLocaleString("en-US", {style: "currency", currency: "USD"});
 
     function handleCartButtonClick() {
         setCatOpen(true);
