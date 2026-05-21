@@ -1,68 +1,98 @@
-import {useActionState} from "react";
+import {useActionState, useContext} from "react";
 
 import Modal from "./Modal.jsx";
 import Input from "./Input.jsx";
-import Error from "./Error.jsx";
 import {isValidEmail, isValidName, isValidStreet, isValidPostalCode, isValidCity, isNotEmpty} from "../utils/validation.js";
+import {CartContext} from "../store/cart-context.jsx";
 
-function checkoutAction(prevFormState, formData) {
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const street = formData.get('street');
-    const postalCode = formData.get('postal-code');
-    const city = formData.get('city');
+async function submitOrder(body) {
+    const res = await fetch("http://localhost:3000/orders", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    });
+    const data = await res.json();
 
-    let errors = [];
-    
-    if (!isNotEmpty(name)) {
-        errors.push("Name is required");
-    } else if (!isValidName(name)) {
-        errors.push("Name must contain only letters, spaces, hyphens or apostrophes (min. 2 characters)");
+    if (!res.ok) {
+        throw new Error(data.message);
     }
 
-    if (!isNotEmpty(email)) {
-        errors.push("Email is required");
-    } else if (!isValidEmail(email)) {
-        errors.push("Please enter a valid email address");
-    }
+    return data.message
+}
 
-    if (!isNotEmpty(street)) {
-        errors.push("Street is required");
-    } else if (!isValidStreet(street)) {
-        errors.push("Street must be at least 3 characters long");
-    }
+export default function Checkout({open, onClose, amount}) {
+    const {items} = useContext(CartContext);
 
-    if (!isNotEmpty(postalCode)) {
-        errors.push("Postal Code is required");
-    } else if (!isValidPostalCode(postalCode)) {
-        errors.push("Postal Code must contain at least 3 characters (numbers, spaces or hyphens)");
-    }
-    
-    if (!isNotEmpty(city)) {
-        errors.push("City is required");
-    } else if (!isValidCity(city)) {
-        errors.push("City must contain only letters, spaces, hyphens or apostrophes (min. 2 characters)");
-    }
+    function checkoutAction(prevFormState, formData) {
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const street = formData.get('street');
+        const postalCode = formData.get('postal-code');
+        const city = formData.get('city');
 
-    if (errors.length > 0) {
-        return {
-            errors: errors,
-            enteredValues: {
+        let errors = [];
+
+        if (!isNotEmpty(name)) {
+            errors.push("Name is required");
+        } else if (!isValidName(name)) {
+            errors.push("Name must contain only letters, spaces, hyphens or apostrophes (min. 2 characters)");
+        }
+
+        if (!isNotEmpty(email)) {
+            errors.push("Email is required");
+        } else if (!isValidEmail(email)) {
+            errors.push("Please enter a valid email address");
+        }
+
+        if (!isNotEmpty(street)) {
+            errors.push("Street is required");
+        } else if (!isValidStreet(street)) {
+            errors.push("Street must be at least 3 characters long");
+        }
+
+        if (!isNotEmpty(postalCode)) {
+            errors.push("Postal Code is required");
+        } else if (!isValidPostalCode(postalCode)) {
+            errors.push("Postal Code must contain at least 3 characters (numbers, spaces or hyphens)");
+        }
+
+        if (!isNotEmpty(city)) {
+            errors.push("City is required");
+        } else if (!isValidCity(city)) {
+            errors.push("City must contain only letters, spaces, hyphens or apostrophes (min. 2 characters)");
+        }
+
+        if (errors.length > 0) {
+            return {
+                errors: errors,
+                enteredValues: {
+                    name,
+                    email,
+                    street,
+                    postalCode,
+                    city,
+                }
+            };
+        }
+
+        try {
+            submitOrder({
                 name,
                 email,
                 street,
                 postalCode,
                 city,
-            }
-        };
+                items,
+            });
+        } catch (error) {
+            //TODO: display error message in UI
+        }
+
+        return {errors: null};
     }
 
-    //TODO: send to backend
-    
-    return {errors: null};
-}
-
-export default function Checkout({open, onClose, amount}) {
     const [formState, formAction, pending] = useActionState(checkoutAction, {errors: null});
 
     return (
