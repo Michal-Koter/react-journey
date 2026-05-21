@@ -8,7 +8,7 @@ import {CartContext} from "../store/cart-context.jsx";
 async function submitOrder(body) {
     const res = await fetch("http://localhost:3000/orders", {
         method: "POST",
-        body: JSON.stringify(body),
+        body: JSON.stringify({order: body}),
         headers: {
             "Content-Type": "application/json",
         }
@@ -79,11 +79,13 @@ export default function Checkout({open, onClose, amount}) {
 
         try {
             submitOrder({
-                name,
-                email,
-                street,
-                postalCode,
-                city,
+                customer: {
+                    name,
+                    email,
+                    street,
+                    'postal-code': postalCode,
+                    city,
+                },
                 items,
             });
         } catch (error) {
