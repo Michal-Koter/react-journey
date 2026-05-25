@@ -23,7 +23,7 @@ async function submitOrder(body) {
 }
 
 export default function Checkout({open, onClose, amount}) {
-    const {items} = useContext(CartContext);
+    const {items, clearCart} = useContext(CartContext);
 
     function checkoutAction(prevFormState, formData) {
         const name = formData.get('name');
@@ -88,6 +88,8 @@ export default function Checkout({open, onClose, amount}) {
                 },
                 items,
             });
+            clearCart();
+            onClose();
         } catch (error) {
             //TODO: display error message in UI
         }
