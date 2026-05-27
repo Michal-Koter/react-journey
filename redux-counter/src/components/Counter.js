@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from 'react-redux';
 
-import {counterActions} from '../store/index';
+import {counterActions} from '../store/counter';
 import classes from './Counter.module.css';
 
 const Counter = () => {
@@ -35,5 +35,33 @@ const Counter = () => {
         </main>
     );
 };
+
+// const counterReducer = (state = initialState, action) => {
+//     switch (action.type) {
+//         case "INCREMENT":
+//             return {
+//                 ...state,
+//                 counter: state.counter + 1,
+//             }
+//         case "INCREASE":
+//             return {
+//                 ...state,
+//                 counter: state.counter + action.amount,
+//             }
+//         case "DECREMENT":
+//             return {
+//                 ...state,
+//                 counter: state.counter - 1,
+//             }
+//         case "TOGGLE_COUNTER":
+//             return {
+//                 ...state,
+//                 showCounter: !state.showCounter,
+//             }
+//         default:
+//             return state;
+//     }
+// }
+// const store = createStore(counterReducer);
 
 export default Counter;
