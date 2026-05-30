@@ -4,8 +4,8 @@ import {useSelector, useDispatch} from "react-redux"
 import Cart from './components/Cart/Cart';
 import Layout from './components/Layout/Layout';
 import Products from './components/Shop/Products';
-import {uiActions} from "./store/ui-slice";
 import Notification from "./components/UI/Notification";
+import {sendCartDate} from "./store/cart-slice";
 
 let isInitial = true;
 
@@ -20,37 +20,7 @@ function App() {
             isInitial = false;
             return;
         }
-
-        dispatch(uiActions.showNotification({
-            status: "pending"
-            , title: "Sending..."
-            , message: "Sending cart data!"
-        }));
-
-        const sendData = async () => {
-            const response = await fetch("https://firebasedatabase.app/cart.json", { // require complete URL with your own firebase database
-                method: "PUT"
-                , body: JSON.stringify(cart)
-            });
-
-            if (!response.ok) {
-                throw new Error("Sending cart data failed.");
-            }
-
-            dispatch(uiActions.showNotification({
-                status: "success"
-                , title: "Success"
-                , message: "Sent cart data successfully!"
-            }));
-        }
-
-        sendData().catch(error => {
-            dispatch(uiActions.showNotification({
-                status: "error"
-                , title: "Error!"
-                , message: "Sending cart data failed!"
-            }));
-        })
+        dispatch(sendCartDate(cart));
     }, [cart, dispatch]);
 
     return (
