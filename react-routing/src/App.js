@@ -16,13 +16,15 @@ import ProductDetailPage from "./pages/ProductDetail";
 
 const router = createBrowserRouter([
     {
+        // Note: absolut path starts with "/", relative path does not start with "/"
         path: "/"
         , element: <RootLayout/>
         , errorElement: <ErrorPage/>
         , children: [
-            {path: "/", element: <HomePage/>}
-            , {path: "/products", element: <ProductsPage/>}
-            , {path: "/products/:productId", element: <ProductDetailPage/>}
+            // relative paths
+            {index: true, element: <HomePage/>}
+            , {path: "products", element: <ProductsPage/>}
+            , {path: "products/:productId", element: <ProductDetailPage/>}
         ]
     }
 ]);

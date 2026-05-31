@@ -13,7 +13,7 @@ export default function ProductsPage() {
             <ul>
                 {DUMMY_PRODUCTS.map((product) => (
                     <li key={product.id}>
-                        <Link to={`/products/${product.id}`}>{product.name}</Link>
+                        <Link to={product.id} relative="">{product.name}</Link>
                     </li>
                 ))}
             </ul>
