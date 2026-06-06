@@ -2,11 +2,12 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import HomePage from "./page/Home";
 import EventsPage, {loader as eventLoader} from "./page/Events";
 import EventDetailPage, {loader as eventDetailLoader, action as deleteEventAction} from "./page/EventDetail";
-import NewEventPage, {action as newEventAction} from "./page/NewEvent";
+import NewEventPage from "./page/NewEvent";
 import EditEventPage from "./page/EditEvent";
 import RootLayout from "./page/RootLayout";
 import EventsRootLayout from "./page/EventRoot";
 import ErrorPage from "./page/Error";
+import {action as manipulateEventAction} from "./components/EventForm"
 
 const router = createBrowserRouter([
     {
@@ -40,13 +41,14 @@ const router = createBrowserRouter([
                             , {
                                 path: "edit"
                                 , element: <EditEventPage/>
+                                , action: manipulateEventAction
                             }
                         ]
                     }
                     , {
                         path: "new"
                         , element: <NewEventPage/>
-                        , action: newEventAction
+                        , action: manipulateEventAction
                     }
 
                 ]
