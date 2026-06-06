@@ -1,4 +1,4 @@
-import PageContent from "../components/PageContriker";
+import PageContent from "../components/PageContent";
 import {useRouteError} from "react-router-dom";
 import MainNavigation from "../components/MainNavigation";
 
