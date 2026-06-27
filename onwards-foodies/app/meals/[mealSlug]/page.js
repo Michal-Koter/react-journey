@@ -6,6 +6,8 @@ export default async function MealPage({params}) {
     const {mealSlug} = await params;
     const meal = getMealBySlug(mealSlug);
 
+    meal.instructions = meal.instructions.replace(/\n/g, '<br/>');
+
     return (
         <>
             <header className={classes.header}>
